@@ -90,37 +90,8 @@ Supervisors: Daniele Marazzina,\\ \hspace*{6.78cm} Ferdinando M. Ametrano}
        \begin{mydef}[distributed system]
        A distributed system is a system whose components are located on different networked computers, which communicate and coordinate their actions by passing messages to one another. The components interact with one another in order to achieve a common goal.
        \end{mydef}
-       \alert{Examples}:
-       \begin{itemize}
-           \item ATM points.
-           \item Computers in cloud.
-           \item Modern smartphones.
-       \end{itemize}
-    \end{frame}
-        
-    \begin{frame}{Distributed Systems: Pros vs. Cons}
-        \begin{minipage}[t]{0.5\linewidth}
-        \noindent
-        \alert{PROS:}
-        \begin{itemize}
-            \item Scalability.
-            \item Performance.
-            \item Fault tolerance.
-            \item Reliability.
-            \item Availability
-        \end{itemize}
-        \end{minipage}\hfill
-        \begin{minipage}[t]{0.5\linewidth}
-        \noindent
-        \alert{CONS:}
-        \begin{itemize}
-            \item Security.
-            \item Consensus.
-        \end{itemize}
-        \end{minipage}
-        
-        \bigskip
-        Thus, the main challenge of distributed systems is to achieve \alert{distributed consensus} in the presence of a number of \alert{faulty processes}.
+       Thus, the main challenge of distributed systems is to achieve \alert{distributed consensus} in the presence of a number of \alert{faulty processes}.
+       
     \end{frame}
      
     \subsection{The Consensus Problem}  
@@ -145,7 +116,6 @@ Supervisors: Daniele Marazzina,\\ \hspace*{6.78cm} Ferdinando M. Ametrano}
                \item Is it possible to achieve \alert{distributed consensus} in an \alert{asynchronous} network in presence of \alert{byzantine} nodes ?
                \item The \alert{Byzantine General's Problem} is the abstraction of such situation.
            \end{itemize}
-           More precisely:
            \begin{mydef}[byzantine general's problem]
             A commanding general must send an order to his $n-1$ lieutenant generals such that the following conditions are satisfied:
             \begin{itemize}
@@ -164,65 +134,18 @@ Supervisors: Daniele Marazzina,\\ \hspace*{6.78cm} Ferdinando M. Ametrano}
                 \item So how Satoshi Nakamoto reaches consensus in \alert{Bitcoin}, a decentralized, distributed, peer-to-peer network ?
             \end{itemize}
             
-        
-            % \begin{itemize}
-            % \item It is \alert{impossible} to reach distributed consensus in an asynchronous network with \alert{one faulty process}, even for a \alert{binary} variable.
-        
-            % \item A non-rigorous proof could be:
-            % \end{itemize}
-        
-            % \begin{figure}
-            % \centering
-            % \begin{minipage}{.5\textwidth}
-            % \centering
-            % \includegraphics[width=0.8\linewidth]{Images/scenario1.png}
-            % \caption{Lieutenant 2 is a traitor.}
-            % \end{minipage}%
-            % \begin{minipage}{.5\textwidth}
-            % \centering
-            % \includegraphics[width=0.8\linewidth]{Images/scenario2.png}
-            % \caption{Commander is a traitor.}
-            % \end{minipage}
-            % \end{figure}
-            
-            % \begin{itemize}
-            %     \item A \alert{formal} proof is made by Fisher, Lynch and Paterson.
-            %     \item How Satoshi Nakamoto reaches consensus in \alert{Bitcoin} ?
-            % \end{itemize}
-            
         \end{frame}
     
     \section{Nakamoto Consensus in Bitcoin}
-    \subsection{Eventual Consistency}
-    
-    \begin{frame}{Bitcoin as an Example of Eventual Consistency}
+    \subsection{Double-spending Problem}
+    \begin{frame}{Double-Spending Problem}
         \begin{itemize}
-            \item \alert{Bitcoin} is a distributed, decentralized, peer-to-peer electronic payment system based on \alert{cryptographic proof}.
-            \item The Bitcoin network is subjected to \alert{network partition}.
-            \item It is inherently characterized by a trade-off between:
-                \begin{itemize}
-                    \item \alert{Consistency}: All nodes agree on the current state.
-                    \item \alert{Availability}: The system is operational and instantly processing incoming requests.
-                    \item \alert{Partition tolerance}: The ability to continue operating correctly even in the presence of a network partition.
-                \end{itemize}
-            \item CAP theorem proves that is \alert{impossible} to achieve \alert{simultaneously} the three properties.
-            \item Nakamoto's intuition has been to relax the \alert{agreement} property in the consensus definition to hold \alert{probabilistically}, to reach \alert{eventual consistency}.
-        \end{itemize}
-    \end{frame}
-    
-    \subsection{Bitcoin Design}
-    
-    \begin{frame}{Double Spending Problem}
-        \begin{itemize}
-            \item In a digital cash scheme, a \alert{single digital token}, being just a file that can be duplicated, can be \alert{spent twice}. 
-            \begin{figure}
-            \centering
-            \includegraphics[keepaspectratio, height=0.5\textheight, width=0.5\textwidth]{Images/double-spending.png}
-            \caption{Illustration of the double spending problem.}
-            \end{figure}
-            \item Nakamoto solves the \alert{double spending problem} combining \alert{cryptography} and \alert{social incentives}. But first, some protocol's mechanics.
+            \item In a digital cash scheme, a \alert{single digital token}, being just a file that can be duplicated, can be \alert{spent twice}.
+            \item Nakamoto's intuition has been to relax the \alert{agreement} property in the consensus definition to hold \alert{probabilistically} and no more \alert{deterministically}.
+            \item Nakamoto solves the \alert{double spending problem} combining \alert{cryptography} and \alert{social incentives}. For a better understanding we need to show some Bitcoin's mechanics.
             \end{itemize}
     \end{frame}
+    \subsection{Transactions \& Blockchain}
     \begin{frame}{Transactions in Bitcoin}
         \begin{itemize}
             \item A \alert{bitcoin} is defined as a chain of digital signatures.
@@ -243,13 +166,14 @@ Supervisors: Daniele Marazzina,\\ \hspace*{6.78cm} Ferdinando M. Ametrano}
         \begin{itemize}
             \item Transactions are recorded in a \alert{distributed ledger}, the \alert{blockchain}, formally a hash pointer linked list.
             \item The \alert{cryptographic link} between blocks requires computing power to be created.
-            \item A block is \alert{valid} only if it includes valid transactions.
+            \item A block is \alert{valid} only if it includes \alert{valid transactions}.
         \end{itemize} 
     \end{frame}
-
+    
+    \subsection{Mining}
+    
     \begin{frame}{Mining \& Proof of Work}
         \begin{itemize}
-            \item All network nodes \alert{validate} and \alert{clear} all transactions.
             \item Special nodes, called \alert{miners}, compete to finalize a new block of transactions, providing \alert{proof-of-work}, which consists of finding a special number \alert{x} called \alert{nonce} s.t.
             $$\text{SHA256}(\text{SHA256}(\underbrace{... \| \text{prev\_block\_header\_hash} \| ... \| x}_{\text{Candidate Block Header}})) < \frac{2^{224}}{d}.$$
             \item The miner who \alert{first} find it is rewarded with the issuance of new bitcoins in a special \alert{coinbase} transaction.
@@ -286,59 +210,46 @@ Supervisors: Daniele Marazzina,\\ \hspace*{6.78cm} Ferdinando M. Ametrano}
             \begin{mydef}[commitment operation]
             A function $C: X \rightarrow Y$ is a commitment operation if given $x_{1} \in X$ it is not feasible to compute $x_{2} \in X$ s.t. $x_{1} \neq x_{2}, C(x_{1}) = C(x_{2})$.
             \end{mydef}
-            \alert{Examples}:
             \begin{itemize}
-                \item append: \textquotedblleft hello\textquotedblright $\xrightarrow{\text{append(\textquotedblleft world\textquotedblright)}}$ \textquotedblleft helloworld\textquotedblright.
-                \item prepend: \textquotedblleft world\textquotedblright $\xrightarrow{\text{prepend(\textquotedblleft hello\textquotedblright)}}$ \textquotedblleft helloworld\textquotedblright.
+                \item A \alert{hash function} is the right \alert{commitment operation} for timestamping.
             \end{itemize}
     \end{frame}
     
     \begin{frame}{Hash Functions}
-        \begin{itemize}
-            \item However, both \textquotedblleft append\textquotedblright and \textquotedblleft prepend\textquotedblright commitment operations are \alert{not good} for timestamping:
-            \begin{itemize}
-                \item They do not \alert{hide} input data.
-                \item Outputs are always \alert{bigger} in size.
-            \end{itemize}
-            \item \alert{Hash functions} map input data of \alert{arbitrary length} into hash values, i.e., outputs of \alert{fixed length}:
-            \begin{itemize}
-                \item \alert{Preimage resistant} (one-wayness): given $h(x)$ it is not feasible to compute $x$.
-                \item \alert{Second-preimage resistant}: given $x$ it is not feasible to compute $y$ s.t. $x \neq y$, $h(x)=h(y)$.
-                \item \alert{Collision resistant}: it is not feasible to find $x, y$ s.t. $x \neq y$, $h(x)=h(y)$.
-            \end{itemize}
-            \item An hash value represents a \alert{digital fingerprint}.
-            \item Bitcoin uses \alert{SHA256}: outputs have a fixed size of 256-bit.
-        \end{itemize}
+       \begin{mydef}[hash function]
+	A function that maps input data of arbitrary length into a fixed length output is called hash function. Moreover, the following properties may hold:
+	\begin{itemize}
+		\item preimage resistance (one-wayness): given $h(x)$ it is not feasible to compute $x$;
+		\item second-preimage resistance: given $x$ it is not feasible to compute $y$ s.t. $x \neq y$, $h(x)=h(y)$;
+		\item collision resistance: it is not feasible to find $x, y$ s.t. $x \neq y$, $h(x)=h(y)$.
+	\end{itemize}
+\end{mydef}
     \end{frame}
     
     \subsection{Timestamping Procedure}
     \begin{frame}{Timestamping Procedure}
         \begin{itemize}
-            \item A generic data file can be \alert{hashed} to produce a short unique identifier.
+            \item A generic data file can be \alert{hashed} to produce a short unique identifier, a sort of \alert{digital fingerprint}.
             \item Such a \alert{digital fingerprint} can be associated to a particular Bitcoin transaction, called \alert{null data transaction}.
-            \item These transactions make use of \alert{OP\_RETURN}, an opcode script which allows to add up to 80 bytes of arbitrary data in a \alert{provably unspendable} transaction.
+            \item These transactions make use of \alert{OP\_RETURN}, an opcode script which allows to add up to 80 bytes of arbitrary data in a transaction (irrelevant amount).
             \item Such transaction \alert{commits} to a specific field of the block header, called \alert{merkleroot}, which is the root of a binary tree that summarize all the transactions in a block.
             \item Blockchain \alert{immutability} provides \alert{timestamping}, proving the data file existance at that moment in time in that specific status.
         \end{itemize}    
     \end{frame}
     
     \section{OpenTimestamps}
-    \subsection{OpenTimestamps Protocol}
-    \begin{frame}{OpenTimestamps}
+    \subsection{Protocol Description}
+    \begin{frame}{OpenTimestamps: Protocol Description}
         \begin{itemize}
-            \item Blockchain timestamping have some \alert{downsides}:
-            \begin{itemize}
-                \item Not efficient: it requires one transaction per document.
-                \item Lack of standardization.
-            \end{itemize}
+            \item However, \alert{blockchain timestamping} lacks of a standardization and is \alert{not efficient}, requiring a transaction per document.
             \item \alert{OpenTimestamps} is an open-source protocol that aims to be a \alert{standard} for blockchain timestamping.
             \item It defines a set of rules for \alert{conveniently} creating \alert{provable timestamps} and later \alert{independently verifying} them.
             \item A \alert{proof} made with OpenTimestamps consists in a list of \alert{commitment operations} applied in sequence to the document, ending with one or more \alert{time attestations}.
-            \item It proposes a \alert{solution} to the \alert{scalability problem}.
+            \item It also proposes a \alert{solution} to the \alert{scalability problem}.
         \end{itemize}
     \end{frame}
     
-    \begin{frame}{OpenTimestamps as a Scalability Solution}
+    \begin{frame}{OpenTimestamps: a Scalability Solution}
         \begin{itemize}
             \item OpenTimestamps allows to \alert{aggregate} up to an \alert{infinite number} of document in a single transaction.
             \item The trick is to compose documents in a \alert{merkle tree} and to timestamp only the \alert{root} of that tree.
@@ -366,21 +277,9 @@ Supervisors: Daniele Marazzina,\\ \hspace*{6.78cm} Ferdinando M. Ametrano}
         \begin{itemize}
             \item The author, in partnership with \alert{DGI} (Digital Gold Institute) and \alert{ANIA} (Associazione Nazionale fra le Imprese Assicuratrici) worked on a \alert{practical use case} of blockchain timestamping.
             \item The aim of the project is to provide a fully operating \alert{timestamping service}.
-            \item It is build upon OpenTimestamps, while marginally \alert{improving} and \alert{extending} such protocol with additional features.
+            \item It is build upon OpenTimestamps, \alert{improving} and \alert{extending} the original protocol with additional features.
             \item For example, any insurance company could make use of it to grant \alert{authenticity} of its associates policies.
             \item Simply, it could be useful whenever a \alert{digital signature} is involved.
-        \end{itemize}
-    \end{frame}
-    
-    \begin{frame}{Architecture of the solution}
-        \begin{itemize}
-            \item The \alert{architecture} of the solution consists of \alert{three cloud-servers}, accessible from outside via traditional network elements (DNS server, reverse proxy, firewall, etc.).
-            \item Such elements transparently remap host names under the domain \textquotedblleft aniasafe.it\textquotedblright.
-            \item The three servers are divided in a \alert{front-end} server and two \alert{back-end} servers:
-            \begin{itemize}
-                \item \alert{Front-end}: hosts the public \alert{web interface} (\url{https://timestamp.aniasafe.it}). 
-                \item \alert{Back-end}: they both run a \alert{calendar server} connected to a local Bitcoin node: (\url{https://calendar.aniasafe.it}) for mainnet, (\url{https://test-calendar.aniasafe.it}) for testnet.
-            \end{itemize}
         \end{itemize}
     \end{frame}
     
@@ -394,37 +293,27 @@ Supervisors: Daniele Marazzina,\\ \hspace*{6.78cm} Ferdinando M. Ametrano}
     
     \begin{frame}{Web Interface}
         \begin{itemize}
-            \item The front-end server hosts the \alert{web interface}.
-            \item The underlying \alert{JavaScript library} defines the \alert{main functions} invoked when a user interacts with the web interface: \textquotedblleft \alert{stamp}\textquotedblright, \textquotedblleft \alert{verifyTimestamp}\textquotedblright and \textquotedblleft \alert{upgradeTimestamp} \textquotedblright.
-            \item The \alert{JS library} has been extended for \alert{additional features}:
-            \begin{itemize}
-                \item \alert{Testnet} as an alternative chain.
-                \item \alert{Multi-validation}: the original protocol supports timestamping on multiple chains, but the verification of one attestation at a time.
-                \item \alert{Esplora} (block-explorer): a new class has been created to query Esplora's API correctly.
-            \end{itemize}
+            \item The \alert{web interface} is hosted by the front-end server.
+            \item A user can easily \alert{drag \& drop} a document to \alert{stamp}, or an ots proof to \alert{verify}.
+            \item Notice that the \alert{hash value} is computed inside user's browser, preserving \alert{privacy}.
+            \item Being a web interface, a user must \alert{trust} a public \alert{block-explorer} for \alert{verification}.
         \end{itemize}
     \end{frame}
     
-     \begin{frame}{Web Interface: Stamping}
-     \begin{figure}
-         \centering
-         \includegraphics[width=1\linewidth]{Images/stamping.png}
-         \caption{Stamping}
-         
-     \end{figure}
+    \begin{frame}{Contributions to OpenTimestamps}
+        \begin{itemize}
+            \item Cleaning of all the \alert{malfunctioning} and \alert{inefficient block-explorers} invoked during verification.
+            \item Introduction of \alert{Esplora}, a new block-explorer owned by Blockstream, greatly \alert{faster} and \alert{more reliable}.
+            \item Creation of \alert{new classes} and \alert{option parameters} to correctly query Esplora's API.
+            \item Possibility to \alert{timestamp} on the \alert{Bitcoin testnet} chain: useful tool for \alert{testing} at \alert{zero cost}, even if the chain is not reliable, having test-coins no real value.
+            \item Introduction of \alert{multi-validation}: now it is possible to verify \alert{multiple attestations} on \alert{multiple chains} simultaneously in a single function call. 
+        \end{itemize}
     \end{frame}
     
-    \begin{frame}{Web Interface: Verifying}
-     \begin{figure}
-         \centering
-         \includegraphics[width=0.85\linewidth]{Images/multivalidation.png}
-         \caption{Multi-validation}
-         
-     \end{figure}
-    \end{frame}
+     
     
     \section{Conclusions}
-     \begin{frame}{Conclusions and Future Work}
+     \begin{frame}{Conclusions and Future Work}\label{lastframe}
       \begin{itemize}
           \item The \alert{notarization} process can be strengthen by means of a \alert{decentralized solution} built upon a \alert{blockchain technology}.
           \item The \alert{Bitcoin blockchain} can be used as a \alert{notary} for timestamping.
@@ -444,6 +333,24 @@ Supervisors: Daniele Marazzina,\\ \hspace*{6.78cm} Ferdinando M. Ametrano}
 		\nocite{*}
 		\bibliography{biblio}
 	\end{frame}
+	
+	\begin{frame}{Web Interface: Stamping}
+     \begin{figure}
+         \centering
+         \includegraphics[width=1\linewidth]{Images/stamping.png}
+         \caption{Stamping}
+         
+     \end{figure}
+    \end{frame}
+    
+    \begin{frame}{Web Interface: Verifying}
+     \begin{figure}
+         \centering
+         \includegraphics[width=0.85\linewidth]{Images/multivalidation.png}
+         \caption{Multi-validation}
+         
+     \end{figure}
+    \end{frame}
     
 \backupend
 \end{document}
